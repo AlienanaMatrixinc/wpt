@@ -12,7 +12,7 @@ async_test(t => {
       abort_signal.onabort = () => onabort_called = true;
       e.respondWith(new Promise(resolve => t.step_timeout(resolve, 0)));
     });
-    appHistory.navigate("?1");
+    promise_rejects_dom(t, 'AbortError', appHistory.navigate("?1"));
     window.stop();
     assert_true(abort_signal.aborted);
     assert_true(onabort_called);
