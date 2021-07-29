@@ -12,6 +12,24 @@ cache_test(cache => {
         });
   }, 'Cache.keys() called on an empty cache');
 
+cache_test(cache => {
+    return cache.keys(undefined)
+      .then(requests => {
+          assert_equals(
+            requests.length, 0,
+            'Cache.keys should resolve to an empty array for an empty cache');
+        });
+  }, 'Cache.keys() with explicitly undefined request');
+
+cache_test(cache => {
+    return cache.keys(undefined, {})
+      .then(requests => {
+          assert_equals(
+            requests.length, 0,
+            'Cache.keys should resolve to an empty array for an empty cache');
+        });
+  }, 'Cache.keys() with explicitly undefined request and empty options');
+
 prepopulated_cache_test(simple_entries, function(cache, entries) {
     return cache.keys('not-present-in-the-cache')
       .then(function(result) {

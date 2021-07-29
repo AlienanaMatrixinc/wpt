@@ -3,6 +3,24 @@ if (self.importScripts) {
     importScripts('../resources/test-helpers.js');
 }
 
+cache_test(cache => {
+    return cache.matchAll(undefined)
+      .then(result => {
+          assert_response_array_equals(
+            result, [],
+            'Cache.matchAll should resolve with an empty array on failure.');
+        });
+  }, 'Cache.matchAll() with explicitly undefined request');
+
+cache_test(cache => {
+  return cache.matchAll(undefined, {})
+      .then(result => {
+          assert_response_array_equals(
+            result, [],
+            'Cache.matchAll should resolve with an empty array on failure.');
+        });
+  }, 'Cache.matchAll() with explicitly undefined request and empty options');
+
 prepopulated_cache_test(simple_entries, function(cache, entries) {
     return cache.matchAll('not-present-in-the-cache')
       .then(function(result) {
